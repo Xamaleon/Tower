@@ -28,18 +28,12 @@ GameWindow::GameWindow(QWidget *parent) :
     scene->addRect(QRect(704,GROUND_Y,290,6),QPen(Qt::black), Qt::black);
 
 
-
     towersKeeper = new TowerKeeper(scene);
-
-
-    connect(this, &GameWindow::signalLockButton, this, &GameWindow::slotLockButton);
-    connect(this, &GameWindow::signalShowMessageWidget, this, &GameWindow::slotShowMessage);
 }
 
 GameWindow::~GameWindow()
 {
     delete ui;
-    delete messageWidget;
     delete towersKeeper;
     qDebug() << "gameWidget delete destruction!";
 }
@@ -48,20 +42,15 @@ GameWindow::~GameWindow()
 void GameWindow::slotBackMenu()
 {
     this->close();
-
 }
 
 
 
 void GameWindow::on_firstToSecond_clicked()
 {
-
     if(towersKeeper->move(FIRST, SECOND)){
         score += 1;
-        if(towersKeeper->isFull()){
-            emit signalLockButton();
-            emit signalShowMessageWidget();
-        }
+        checkForComplite();
     }
 }
 
@@ -69,10 +58,7 @@ void GameWindow::on_firstToThird_clicked()
 {
     if(towersKeeper->move(FIRST, THIRD)){
         score += 1;
-        if(towersKeeper->isFull()){
-            emit signalLockButton();
-            emit signalShowMessageWidget();
-        }
+        checkForComplite();
     }
 }
 
@@ -80,10 +66,7 @@ void GameWindow::on_secondToFirst_clicked()
 {
     if(towersKeeper->move(SECOND, FIRST)){
         score += 1;
-        if(towersKeeper->isFull()){
-            emit signalLockButton();
-            emit signalShowMessageWidget();
-        }
+        checkForComplite();
     }
 }
 
@@ -91,10 +74,7 @@ void GameWindow::on_secondToThird_clicked()
 {
     if(towersKeeper->move(SECOND, THIRD)){
         score += 1;
-        if(towersKeeper->isFull()){
-            emit signalLockButton();
-            emit signalShowMessageWidget();
-        }
+        checkForComplite();
     }
 }
 
@@ -102,10 +82,7 @@ void GameWindow::on_thirdToFirst_clicked()
 {
     if(towersKeeper->move(THIRD, FIRST)){
         score += 1;
-        if(towersKeeper->isFull()){
-            emit signalLockButton();
-            emit signalShowMessageWidget();
-        }
+        checkForComplite();
     }
 }
 
@@ -113,29 +90,43 @@ void GameWindow::on_thirdToSecond_clicked()
 {
     if(towersKeeper->move(THIRD, SECOND)){
         score += 1;
-        if(towersKeeper->isFull()){
-            emit signalLockButton();
-            emit signalShowMessageWidget();
-        }
+        checkForComplite();
     }
 }
 
-void GameWindow::slotLockButton()
+void GameWindow::setButtonsLock(bool lock)
 {
-    ui->firstToThird->setEnabled(false);
-    ui->firstToSecond->setEnabled(false);
-    ui->secondToFirst->setEnabled(false);
-    ui->secondToThird->setEnabled(false);
-    ui->thirdToFirst->setEnabled(false);
-    ui->thirdToSecond->setEnabled(false);
+    ui->firstToThird->  setDisabled(lock);
+    ui->firstToSecond-> setDisabled(lock);
+    ui->secondToFirst-> setDisabled(lock);
+    ui->secondToThird-> setDisabled(lock);
+    ui->thirdToFirst->  setDisabled(lock);
+    ui->thirdToSecond-> setDisabled(lock);
 }
 
-void GameWindow::slotShowMessage()
+void GameWindow::showResult()
 {
-    messageWidget = new ScoreRecorder(score);
-    connect(messageWidget, &ScoreRecorder::signalCloseEvent, this, &GameWindow::signalCloseEvent);
+    ScoreRecorder * messageWidget = new ScoreRecorder(score);
+    connect(messageWidget, &ScoreRecorder::signalCloseEvent, this, [&](){
+        setButtonsLock(false);
+        // хоть на луну тут лети
+        // 1. хочу теслу на новый год
+        // 2. съездить на бали
+        // 3. носки с медведем
+        // ...
+    });
+    messageWidget->setAttribute(Qt::WA_DeleteOnClose);
     messageWidget->show();
+}
 
+bool GameWindow::checkForComplite()
+{
+    if(towersKeeper->isFull()){
+        setButtonsLock(true);
+        showResult();
+        return true;
+    }
+    return false;
 }
 
 

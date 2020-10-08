@@ -15,7 +15,7 @@ ScoreRecorder::~ScoreRecorder()
 {
     delete ui;
     qDebug() << "ScoreRecorder destruction!";
-
+    emit signalCloseEvent();
 }
 
 void ScoreRecorder::closeEvent(QCloseEvent *event)

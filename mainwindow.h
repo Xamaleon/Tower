@@ -33,9 +33,6 @@ private slots:
     void on_btn_table_clicked();
 
     void slotCloseEvent();
-
-    void slotShowMessageWidget();
-
 signals:
     void signalBackMenu();
 public slots:
