@@ -1,0 +1,10 @@
+<RCC>
+    <qresource prefix="/resource">
+        <file>img/exit.png</file>
+        <file>img/record.png</file>
+        <file>img/info.png</file>
+        <file>img/back_menu.png</file>
+        <file>img/game.png</file>
+        <file>img/main_ico.png</file>
+    </qresource>
+</RCC>
