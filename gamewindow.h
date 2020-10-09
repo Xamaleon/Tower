@@ -25,8 +25,7 @@ public:
 public slots:
     void slotBackMenu();
 signals:
-    void signalLockButton();
-    void signalShowMessageWidget();
+
     void signalCloseEvent();
 private slots:
     void on_firstToSecond_clicked();
@@ -41,19 +40,19 @@ private slots:
 
     void on_thirdToSecond_clicked();
 
-    void slotLockButton();
+    void showResult();
 
-    void slotShowMessage();
+    void setButtonsLock(bool lock);
 
-
-
+    bool checkForComplite();
 
 private:
     Ui::GameWindow *ui;
     QGraphicsScene *scene {nullptr};
     TowerKeeper *towersKeeper {nullptr};
-    ScoreRecorder *messageWidget {nullptr};
+
     int score = 0;
+
 
 };
 

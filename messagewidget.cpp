@@ -14,20 +14,14 @@ ScoreRecorder::ScoreRecorder(int score, QWidget *parent) :
 ScoreRecorder::~ScoreRecorder()
 {
     delete ui;
+    emit signalCloseEvent();
     qDebug() << "ScoreRecorder destruction!";
 
 }
 
-void ScoreRecorder::closeEvent(QCloseEvent *event)
-{
-    emit signalCloseEvent();
-    event->accept();
-}
-
-
-
 void ScoreRecorder::on_btn_writeInTable_clicked()
 {
+
 }
 
 

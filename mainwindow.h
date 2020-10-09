@@ -34,8 +34,6 @@ private slots:
 
     void slotCloseEvent();
 
-    void slotShowMessageWidget();
-
 signals:
     void signalBackMenu();
 public slots:

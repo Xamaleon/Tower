@@ -56,10 +56,10 @@ bool TowerKeeper::move(Number from, Number to)
 
 bool TowerKeeper::isFull()
 {
-    if(towers.at(1)->size() == 3 || towers.at(2)->size() == 3){
-        return true;
+    for(auto &t : towers){
+        while (t->size() == 3 && towers.at(0)->size() != 3) {
+            return true;
+        }
     }
-    else{
-        return false;
-    }
+    return false;
 }

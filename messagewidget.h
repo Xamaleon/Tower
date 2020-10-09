@@ -24,11 +24,6 @@ private slots:
 
 private:
     Ui::MessageWidget *ui;
-
-    // QWidget interface
-protected:
-    void closeEvent(QCloseEvent *event);
-
 };
 
 #endif // MESSAGEWIDGET_H

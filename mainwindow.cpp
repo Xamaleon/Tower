@@ -40,7 +40,6 @@ void MainWindow::on_btn_newGame_clicked()
     setting(WIDGETS::GAME_WIDGET);
 
     connect(this, &MainWindow::signalBackMenu, gameWindow, &GameWindow::slotBackMenu);
-    connect(gameWindow, &GameWindow::signalShowMessageWidget, this, &MainWindow::slotShowMessageWidget);
     connect(gameWindow, &GameWindow::signalCloseEvent, this, &MainWindow::slotCloseEvent);
 
 }
@@ -69,18 +68,11 @@ void MainWindow::slotCloseEvent()
     deleteWidget(WIDGETS::GAME_WIDGET);
 }
 
-void MainWindow::slotShowMessageWidget()
-{
-
-
-}
 
 void MainWindow::slotCloseWidget()
 {
     setting(WIDGETS::MAIN_WIDGET);
 }
-
-
 
 void MainWindow::deleteWidget(const int indexWidget)
 {
